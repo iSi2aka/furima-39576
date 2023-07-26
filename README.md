@@ -40,6 +40,7 @@ Things you may want to cover:
 
 - has_many :items
 - has_many :orders
+- has_many :addresses
 
 
 ## items テーブル
@@ -72,11 +73,12 @@ Things you may want to cover:
 | street_num    | string     | null: false                    |
 | building_num  | string     |                                |
 | phone_num     | string     | null: false                    |
-| order         | references | null: false, foreign_key: true |
+| user          | references | null: false, foreign_key: true |
 
 ### Association
 
-- belongs_to :order
+- belongs_to :user
+- has_one :order
 
 
 ## orders テーブル
@@ -85,9 +87,10 @@ Things you may want to cover:
 | ------------- | ---------- | ------------------------------ |
 | user          | references | null: false, foreign_key: true |
 | item          | references | null: false, foreign_key: true |
+| address       | references | null: false, foreign_key: true |
 
 ### Association
 
 - belongs_to :user
 - belongs_to :item
-- has_one :address
+- belongs_to :address
