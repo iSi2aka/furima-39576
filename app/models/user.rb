@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   VALID_PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?[\d])[a-z\d]+\z/i.freeze
-  ZENKAKU_REGEXP       = /\A[ぁ-んァ-ン一-龥]+\z/.freeze
+  ZENKAKU_REGEXP       = /\A[ぁ-んァ-ン一-龥々ー]+\z/.freeze
   KATAKANA_REGEXP      = /\A[\p{katakana}\u{30fc}]+\z/.freeze
 
   validates :password,         format: { with: VALID_PASSWORD_REGEX, message: 'は半角英数を両方含む必要があります', allow_blank: true }
