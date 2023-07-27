@@ -83,6 +83,7 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
+    coderay (1.1.3)
     concurrent-ruby (1.2.2)
     crass (1.0.6)
     date (3.3.3)
@@ -104,6 +105,7 @@ GEM
       railties (>= 5.0.0)
     faker (3.2.0)
       i18n (>= 1.8.11, < 2)
+    faker-japanese (0.0.1)
     globalid (1.1.0)
       activesupport (>= 5.0)
     i18n (1.14.1)
@@ -152,6 +154,11 @@ GEM
       ast (~> 2.4.1)
       racc
     pg (1.5.3)
+    pry (0.14.2)
+      coderay (~> 1.1)
+      method_source (~> 1.0)
+    pry-rails (0.3.9)
+      pry (>= 0.10.4)
     public_suffix (5.0.3)
     puma (5.6.6)
       nio4r (~> 2.0)
@@ -279,10 +286,12 @@ DEPENDENCIES
   devise
   factory_bot_rails
   faker
+  faker-japanese
   importmap-rails
   jbuilder
   mysql2 (~> 0.5)
   pg
+  pry-rails
   puma (~> 5.0)
   rails (~> 7.0.0)
   rspec-rails (~> 4.0.0)
