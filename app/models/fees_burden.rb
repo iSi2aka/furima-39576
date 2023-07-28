@@ -1,4 +1,4 @@
-class Fees_burden < ActiveHash::Base
+class FeesBurden < ActiveHash::Base
   include ActiveHash::Associations
   has_many :items
 
