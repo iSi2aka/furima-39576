@@ -1,5 +1,6 @@
 class ItemsController < ApplicationController
   def index
+    @items = Item.order("created_at DESC")
   end
 
   def new
@@ -13,6 +14,12 @@ class ItemsController < ApplicationController
     else
       render :new, status: :unprocessable_entity
     end 
+  end
+
+  private
+
+  def item_params
+    params.rquire(:item).permit(:title, :description, :category_id, :condition_id, :fees_burden_id, :prefecture_id, :days_to_ship_id, :price )
   end
 
 end
