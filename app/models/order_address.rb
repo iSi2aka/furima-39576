@@ -10,6 +10,7 @@ class OrderAddress
     validates :phone_num,       format: { with: /\A\d{10,11}\z/, message: "は（半角数字）10~11文字で入力する必要があります", allow_blank: true}
     validates :user_id
     validates :item_id
+    validates :token
    
   end 
   validates :prefecture_id,   numericality: { other_than: 1, message: "can't be blank" }
