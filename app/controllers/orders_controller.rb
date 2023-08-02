@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  before_action :authenticate_user!, except: :index
+  before_action :authenticate_user!
   before_action :set_order, only: [:index, :create]
 
   def index
@@ -34,5 +34,8 @@ class OrdersController < ApplicationController
 
   def set_order
     @item = Item.find(params[:item_id])
+    if (current_user.id == @item.user_id ) || @item.order.present?
+      redirect_to root_path
+    end
   end 
 end
