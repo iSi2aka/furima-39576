@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
-  before_action :move_to_index, except: [:index, :show]
   before_action :set_item, only: [:show, :edit, :update ]
+  before_action :move_to_index, except: [:index, :show]
 
   def index
     @items = Item.includes(:user).order("created_at DESC")
@@ -26,6 +26,9 @@ class ItemsController < ApplicationController
     unless current_user.id == @item.user_id 
       redirect_to root_path
     end  
+    if @item.order.present?
+      redirect_to root_path
+    end
   end
 
   def update
@@ -55,14 +58,17 @@ class ItemsController < ApplicationController
           .merge(user_id: current_user.id)
   end
 
+  def set_item
+    @item = Item.find(params[:id])
+  end
+
   def move_to_index
     unless user_signed_in?
       redirect_to new_user_session_path
     end
-  end
-
-  def set_item
-    @item = Item.find(params[:id])
+    if @item.order.present?
+      redirect_to root_path
+    end
   end
 
 end
