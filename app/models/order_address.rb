@@ -20,14 +20,6 @@ class OrderAddress
     Address.create(postal_code: postal_code, prefecture_id: prefecture_id, city: city, street_num: street_num, building_num: building_num, phone_num: phone_num, order_id: order.id)
   end
 
-  def user=(user)
-    self.user_id = user
-  end
-
-  def item=(item)
-    self.item_id = item
-  end
-
 end
 
  
