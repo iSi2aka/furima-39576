@@ -3,21 +3,14 @@ class OrdersController < ApplicationController
   before_action :set_order, only: [:index, :create]
 
   def index
-    gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
     @order_address = OrderAddress.new
   end
   
   def create
-    @user = current_user
     @order_address = OrderAddress.new(order_params)
     if @order_address.valid?
-      Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
-      Payjp::Charge.create(
-        amount: @item[:price],
-        card: order_params[:token],
-        currency: 'jpy'
-      )
-      @order_address.save(@user.id, @item.id)
+      pay_item
+      @order_address.save
       redirect_to root_path
     else 
       render :index, status: :unprocessable_entity
@@ -33,9 +26,19 @@ class OrdersController < ApplicationController
   end
 
   def set_order
+    gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
     @item = Item.find(params[:item_id])
     if (current_user.id == @item.user_id ) || @item.order.present?
       redirect_to root_path
     end
   end 
+  
+  def pay_item
+    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
+    Payjp::Charge.create(
+      amount: @item[:price],
+      card: order_params[:token],
+      currency: 'jpy'
+    )
+  end
 end

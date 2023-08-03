@@ -2,9 +2,9 @@ require 'rails_helper'
 
 RSpec.describe OrderAddress, type: :model do
   before do
-    @user = FactoryBot.create(:user)
-    @item = FactoryBot.create(:item)
-    @order_address = FactoryBot.build(:order_address, user: @user, item: @item)
+    user = FactoryBot.create(:user)
+    item = FactoryBot.create(:item)
+    @order_address = FactoryBot.build(:order_address, user_id: user.id, item_id: item.id)
   end
 
   describe '商品購入機能' do
@@ -55,13 +55,15 @@ RSpec.describe OrderAddress, type: :model do
         @order_address.valid?
         expect(@order_address.errors.full_messages).to include("Phone num can't be blank")
       end
-      it "phone_numが9文字以下/12文字以上では購入できない" do
-        phone_num = ['123456789', '123456789012']
-        phone_num.each do |phone| 
-          @order_address.phone_num = phone
-          @order_address.valid?
-          expect(@order_address.errors.full_messages).to include("Phone num は（半角数字）10~11文字で入力する必要があります")
-        end
+      it "phone_numが9文字以下では購入できない" do 
+        @order_address.phone_num = '123456789'
+        @order_address.valid?
+        expect(@order_address.errors.full_messages).to include("Phone num は（半角数字）10~11文字で入力する必要があります")
+      end
+      it "phone_numが12文字以上では購入できない" do 
+        @order_address.phone_num = '123456789012'
+        @order_address.valid?
+        expect(@order_address.errors.full_messages).to include("Phone num は（半角数字）10~11文字で入力する必要があります")
       end
       it "phone_numが（半角数字）以外では購入できない" do
         phone_num = ['123-456-7890', '１２３４５６７']
